@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Redux - Hello</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.js"></script>
+</head>
+<body>
+	<h1 id="container"></h1>
+
+	<script>
+		const helloReducer = (state, action) => {
+			switch (action.type) {
+				case 'HELLO':
+					return 'Hello Redux!';
+				default:
+					return state;
+			}
+		}
+
+		const { createStore } = Redux;
+		const store = createStore(helloReducer);
+
+		const helloListener = function() {
+			document.getElementById('container').innerHTML = store.getState();
+		}
+
+		store.subscribe(helloListener);
+
+		console.log('state: ', store.getState());
+
+		const helloAction = { type: 'HELLO' };
+		store.dispatch(helloAction);
+
+		console.log('state: ', store.getState());
+
+	</script>
+</body>
+</html>
