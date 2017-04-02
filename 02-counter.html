@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Counter</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.js"></script>
+</head>
+<body>
+	<h1>Counter</h1>
+	<button class="dec-btn">-</button>
+	<span class="counter">0</span>
+	<button class="inc-btn">+</button>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+	<script>
+		const counterReducer = (state = 0, action) => {
+			switch (action.type) {
+				case 'INC':
+					return state + 1;
+				case 'DEC':
+					return state - 1;
+				default:
+					return state;
+			}
+		}
+
+		const { createStore } = Redux;
+		const store = createStore(counterReducer);
+
+		const counterListener = function() {
+			$('.counter').html( store.getState() );
+		}
+
+		store.subscribe(counterListener);
+
+		console.log('state: ', store.getState());
+
+		$('.inc-btn').on('click', function() {
+			const incAction = { type: 'INC' };
+			store.dispatch(incAction);
+			console.log('state: ', store.getState());
+		});
+
+		$('.dec-btn').on('click', function() {
+			const decAction = { type: 'DEC' };
+			store.dispatch(decAction);
+			console.log('state: ', store.getState());
+		});
+
+
+	</script>
+</body>
+</html>
